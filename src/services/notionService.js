@@ -5,8 +5,8 @@ class NotionService {
     const devProxy = 'https://cors-anywhere.herokuapp.com/';
     
     // Используем оригинальный ID без изменений
-    this.databaseId = '16ed2176-428d-805c-909c-ddb1c7332a29';
-    
+    // this.databaseId = '16ed2176-428d-805c-909c-ddb1c7332a29';
+    this.databaseId = '166937ca-10d4-814b-87cf-c08aa6a5c69d'
     this.baseUrl = `${devProxy}https://api.notion.com/v1`;
     this.headers = {
       'Authorization': `Bearer ${API_KEY}`,
