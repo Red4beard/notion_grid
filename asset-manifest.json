@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/notion_grid/static/css/main.6c14e040.css",
-    "main.js": "/notion_grid/static/js/main.6cc30aea.js",
+    "main.js": "/notion_grid/static/js/main.d9743c24.js",
     "static/js/156.c661c430.chunk.js": "/notion_grid/static/js/156.c661c430.chunk.js",
     "index.html": "/notion_grid/index.html",
     "main.6c14e040.css.map": "/notion_grid/static/css/main.6c14e040.css.map",
-    "main.6cc30aea.js.map": "/notion_grid/static/js/main.6cc30aea.js.map",
+    "main.d9743c24.js.map": "/notion_grid/static/js/main.d9743c24.js.map",
     "156.c661c430.chunk.js.map": "/notion_grid/static/js/156.c661c430.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.6c14e040.css",
-    "static/js/main.6cc30aea.js"
+    "static/js/main.d9743c24.js"
   ]
 }
