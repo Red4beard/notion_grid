@@ -1,3 +1,5 @@
+import React from 'react';
+
 const InstagramPost = ({ post }) => {
     // Определяем формат поста на основе типа
     const isReel = post.type === 'reel';
