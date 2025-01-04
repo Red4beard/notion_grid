@@ -2,17 +2,14 @@ const API_KEY = process.env.REACT_APP_NOTION_API_KEY;
 
 class NotionService {
   constructor() {
-    const devProxy = 'https://cors-anywhere.herokuapp.com/';
-    
     // Используем оригинальный ID без изменений
     // this.databaseId = '16ed2176-428d-805c-909c-ddb1c7332a29';
     this.databaseId = '16f937ca10d4809591f2d320ddf01689'
-    this.baseUrl = `${devProxy}https://api.notion.com/v1`;
+    this.baseUrl = `/v1`;
     this.headers = {
       'Authorization': `Bearer ${API_KEY}`,
       'Content-Type': 'application/json',
-      'Notion-Version': '2022-06-28',
-      'Accept': 'application/json'
+      'Notion-Version': '2022-06-28'
     };
   }
 
