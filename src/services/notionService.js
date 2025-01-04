@@ -6,7 +6,7 @@ class NotionService {
     
     // Используем оригинальный ID без изменений
     // this.databaseId = '16ed2176-428d-805c-909c-ddb1c7332a29';
-    this.databaseId = '166937ca10d4814b87cfc08aa6a5c69d'
+    this.databaseId = '16f937ca10d4809591f2d320ddf01689'
     this.baseUrl = `${devProxy}https://api.notion.com/v1`;
     this.headers = {
       'Authorization': `Bearer ${API_KEY}`,
