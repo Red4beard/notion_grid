@@ -1,28 +1,26 @@
-// Получаем API ключ из переменных окружения
 const API_KEY = process.env.REACT_APP_NOTION_API_KEY;
+const DATABASE_ID = process.env.REACT_APP_NOTION_DATABASE_ID;
 
 class NotionService {
   constructor() {
-    // Используем полный URL для API Notion
-    this.baseUrl = 'https://api.notion.com/v1';
+    const devProxy = 'https://cors-anywhere.herokuapp.com/';
     
-    // Берем ID базы данных из переменных окружения или используем запасной вариант
-    this.databaseId = process.env.REACT_APP_NOTION_DATABASE_ID || '16f937ca10d4809591f2d320ddf01689';
+    // Используем значение из .env
+    this.databaseId = DATABASE_ID; 
     
-    // Настраиваем заголовки для запросов
+    this.baseUrl = `${devProxy}https://api.notion.com/v1`;
     this.headers = {
       'Authorization': `Bearer ${API_KEY}`,
       'Content-Type': 'application/json',
       'Notion-Version': '2022-06-28',
-      // Добавляем CORS заголовки
-      'Access-Control-Allow-Origin': '*'
+      'Accept': 'application/json'
     };
   }
 
-  // Проверка подключения к API
+  // Проверка подключения
   async testConnection() {
     try {
-      console.log('🔍 Начинаем проверку подключения к API...');
+      console.log('Отправляем тестовый запрос...');
       
       const response = await fetch(`${this.baseUrl}/users/me`, {
         method: 'GET',
@@ -31,81 +29,59 @@ class NotionService {
       
       if (!response.ok) {
         const errorText = await response.text();
-        console.error('❌ Ошибка подключения:', {
+        console.error('Детали ошибки:', {
           status: response.status,
           statusText: response.statusText,
-          details: errorText
+          body: errorText
         });
-        throw new Error(`Ошибка HTTP: ${response.status}`);
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
       
       const data = await response.json();
-      console.log('✅ Подключение успешно:', data);
+      console.log('Подключение к API успешно:', data);
       return data;
     } catch (error) {
-      console.error('❌ Ошибка API:', error.message);
+      console.error('Ошибка подключения к API:', error.message);
       throw error;
     }
   }
 
-  // Форматирование данных страницы
   formatPageData(page) {
-    console.log('📄 Обработка страницы:', page.id);
-    
+    console.log('Данные страницы:', page);
     return {
       id: page.id,
-      title: page.properties.Title?.title?.[0]?.text?.content || 'Без названия',
-      imageUrl: page.properties.Image?.files?.[0]?.file?.url || 
-                page.properties.Image?.files?.[0]?.external?.url || '',
-      type: page.properties.Type?.select?.name || 'post',
+      title: page.properties.Title?.title?.[0]?.text?.content || '',
+      imageUrl: page.properties.Image?.files?.[0]?.file?.url || '',
+      type: page.properties.Type?.select?.name || '',
       postedDate: page.properties['Posted Date']?.date?.start || ''
     };
   }
 
-  // Получение данных из базы
   async getInstagramContent() {
     try {
-      console.log('📥 Загрузка данных из базы...');
-      
       const response = await fetch(`${this.baseUrl}/databases/${this.databaseId}/query`, {
         method: 'POST',
-        headers: this.headers,
-        // Добавляем пустой body для POST запроса
-        body: JSON.stringify({})
+        headers: this.headers
       });
-
+  
       if (!response.ok) {
-        const errorText = await response.text();
-        console.error('❌ Ошибка получения данных:', {
-          status: response.status,
-          text: errorText
-        });
         throw new Error(`Ошибка получения данных: ${response.status}`);
       }
-
+  
       const data = await response.json();
-      console.log('✅ Получены сырые данные:', data);
-
-      const formattedData = data.results.map(page => this.formatPageData(page));
-      console.log('✨ Отформатированные данные:', formattedData);
-      
+        const formattedData = data.results.map(page => this.formatPageData(page));
+        
+      console.log('Отформатированные данные:', formattedData);
       return formattedData;
     } catch (error) {
-      console.error('❌ Ошибка при получении данных:', error);
+      console.error('Ошибка при получении данных:', error);
       throw error;
     }
   }
 }
 
-// Создаём и экспортируем единственный экземпляр сервиса
 const notionServiceInstance = new NotionService();
 export default notionServiceInstance;
-
-
-
-
-
-
 
 
 // const API_KEY = process.env.REACT_APP_NOTION_API_KEY;
