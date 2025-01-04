@@ -21,6 +21,10 @@ function App() {
 
     loadPosts();
   }, []);
+    
+  useEffect(() => {
+    console.log('Current posts:', posts);
+  }, [posts]);
 
   // Добавляем проверку состояния загрузки
   if (loading) {

@@ -4,7 +4,7 @@ class NotionService {
   constructor() {
     // Используем оригинальный ID без изменений
     // this.databaseId = '16ed2176-428d-805c-909c-ddb1c7332a29';
-    this.databaseId = '16f937ca10d4809591f2d320ddf01689'
+    this.databaseId = process.env.REACT_APP_NOTION_DATABASE_ID || '16f937ca10d4809591f2d320ddf01689';
     this.baseUrl = `/v1`;
     this.headers = {
       'Authorization': `Bearer ${API_KEY}`,
