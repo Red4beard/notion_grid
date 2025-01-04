@@ -1,82 +1,88 @@
-import axios from 'axios';
-
 const API_KEY = process.env.REACT_APP_NOTION_API_KEY;
 const DATABASE_ID = process.env.REACT_APP_NOTION_DATABASE_ID;
 
 class NotionService {
-    constructor() {
-        // Создаем экземпляр axios с базовыми настройками
-        this.api = axios.create({
-            baseURL: 'https://api.notion.com/v1',
-            headers: {
-                'Authorization': `Bearer ${API_KEY}`,
-                'Content-Type': 'application/json',
-                'Notion-Version': '2022-06-28'
-            }
+  constructor() {
+    const devProxy = 'https://cors-anywhere.herokuapp.com/';
+    
+    // Используем значение из .env
+    this.databaseId = DATABASE_ID; 
+    
+    this.baseUrl = `${devProxy}https://api.notion.com/v1`;
+    this.headers = {
+      'Authorization': `Bearer ${API_KEY}`,
+      'Content-Type': 'application/json',
+      'Notion-Version': '2022-06-28',
+      'Accept': 'application/json'
+    };
+  }
+
+  // Проверка подключения
+  async testConnection() {
+    try {
+      console.log('Отправляем тестовый запрос...');
+      
+      const response = await fetch(`${this.baseUrl}/users/me`, {
+        method: 'GET',
+        headers: this.headers
+      });
+      
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('Детали ошибки:', {
+          status: response.status,
+          statusText: response.statusText,
+          body: errorText
         });
-
-        this.databaseId = DATABASE_ID;
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      const data = await response.json();
+      console.log('Подключение к API успешно:', data);
+      return data;
+    } catch (error) {
+      console.error('Ошибка подключения к API:', error.message);
+      throw error;
     }
+  }
 
-    async getInstagramContent() {
-        try {
-            // Проверяем настройки
-            console.log('🔄 Проверяем настройки:', {
-                'База данных доступна': !!this.databaseId,
-                'API ключ доступен': !!API_KEY
-            });
+  formatPageData(page) {
+    console.log('Данные страницы:', page);
+    return {
+      id: page.id,
+      title: page.properties.Title?.title?.[0]?.text?.content || '',
+      imageUrl: page.properties.Image?.files?.[0]?.file?.url || '',
+      type: page.properties.Type?.select?.name || '',
+      postedDate: page.properties['Posted Date']?.date?.start || ''
+    };
+  }
 
-            // Делаем тестовый запрос
-            console.log('📡 Проверяем доступ к базе данных...');
-            const testResponse = await this.api.get(`/databases/${this.databaseId}`);
-            console.log('✅ База данных доступна:', testResponse.data);
-
-            // Формируем основной запрос
-            const requestBody = {
-                page_size: 100,
-                filter: {
-                    property: "Status",
-                    select: {
-                        equals: "Published"
-                    }
-                }
-            };
-
-            // Получаем данные
-            console.log('📤 Отправляем основной запрос...');
-            const response = await this.api.post(
-                `/databases/${this.databaseId}/query`,
-                requestBody
-            );
-
-            // Обрабатываем результат
-            const formattedData = response.data.results.map(page => this.formatPageData(page));
-            console.log('🎯 Получены данные:', formattedData);
-            return formattedData;
-
-        } catch (error) {
-            // Подробный вывод ошибки
-            console.error('💥 Ошибка:', {
-                message: error.message,
-                response: error.response?.data,
-                status: error.response?.status
-            });
-            throw error;
-        }
+  async getInstagramContent() {
+    try {
+      const response = await fetch(`${this.baseUrl}/databases/${this.databaseId}/query`, {
+        method: 'POST',
+        headers: this.headers
+      });
+  
+      if (!response.ok) {
+        throw new Error(`Ошибка получения данных: ${response.status}`);
+      }
+  
+      const data = await response.json();
+        const formattedData = data.results.map(page => this.formatPageData(page));
+        
+      console.log('Отформатированные данные:', formattedData);
+      return formattedData;
+    } catch (error) {
+      console.error('Ошибка при получении данных:', error);
+      throw error;
     }
-
-    formatPageData(page) {
-        return {
-            id: page.id,
-            title: page.properties.Title?.title?.[0]?.text?.content || '',
-            imageUrl: page.properties.Image?.files?.[0]?.file?.url || '',
-            type: page.properties.Type?.select?.name || '',
-            postedDate: page.properties['Posted Date']?.date?.start || ''
-        };
-    }
+  }
 }
 
-export default new NotionService();
+const notionServiceInstance = new NotionService();
+export default notionServiceInstance;
+
 
 //--------------------------------------------
 // // Получаем ключи из переменных окружения
