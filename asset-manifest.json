@@ -1,17 +1,15 @@
 {
   "files": {
-    "main.css": "/notion_grid/static/css/main.1d11b0ff.chunk.css",
-    "main.js": "/notion_grid/static/js/main.16cc412e.chunk.js",
-    "main.js.map": "/notion_grid/static/js/main.16cc412e.chunk.js.map",
-    "runtime~main.js": "/notion_grid/static/js/runtime~main.46d7626c.js",
-    "runtime~main.js.map": "/notion_grid/static/js/runtime~main.46d7626c.js.map",
-    "static/js/2.ae026ab9.chunk.js": "/notion_grid/static/js/2.ae026ab9.chunk.js",
-    "static/js/2.ae026ab9.chunk.js.map": "/notion_grid/static/js/2.ae026ab9.chunk.js.map",
-    "static/js/3.445915d0.chunk.js": "/notion_grid/static/js/3.445915d0.chunk.js",
-    "static/js/3.445915d0.chunk.js.map": "/notion_grid/static/js/3.445915d0.chunk.js.map",
+    "main.css": "/notion_grid/static/css/main.4cfb0080.css",
+    "main.js": "/notion_grid/static/js/main.2dc91835.js",
+    "static/js/488.209d7ca9.chunk.js": "/notion_grid/static/js/488.209d7ca9.chunk.js",
     "index.html": "/notion_grid/index.html",
-    "precache-manifest.628c286f1002c1c0f6c5c6d00f34ebc7.js": "/notion_grid/precache-manifest.628c286f1002c1c0f6c5c6d00f34ebc7.js",
-    "service-worker.js": "/notion_grid/service-worker.js",
-    "static/css/main.1d11b0ff.chunk.css.map": "/notion_grid/static/css/main.1d11b0ff.chunk.css.map"
-  }
+    "main.4cfb0080.css.map": "/notion_grid/static/css/main.4cfb0080.css.map",
+    "main.2dc91835.js.map": "/notion_grid/static/js/main.2dc91835.js.map",
+    "488.209d7ca9.chunk.js.map": "/notion_grid/static/js/488.209d7ca9.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.4cfb0080.css",
+    "static/js/main.2dc91835.js"
+  ]
 }
