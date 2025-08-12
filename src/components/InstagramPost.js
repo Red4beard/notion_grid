@@ -1,32 +1,3 @@
-// import React from 'react';
-
-// const InstagramPost = ({ post }) => {
-//   return (
-//     <div className="post-card">
-//       {post.imageUrl ? (
-//         <img
-//           src={post.imageUrl}
-//           alt={`Пост ${post.title}`}
-//           style={{
-//             width: '100%',
-//             height: '100%',
-//             objectFit: 'cover'
-//           }}
-//         />
-//       ) : (
-//         <div
-//           style={{
-//             width: '100%',
-//             height: '100%',
-//             backgroundColor: '#f1f1f1'
-//           }}
-//         />
-//       )}
-//     </div>
-//   );
-// };
-
-// export default InstagramPost;
 
 import React from 'react';
 
